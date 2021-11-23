@@ -12,27 +12,27 @@ namespace CleanArchitecture.Sample.Application.Services
             _repository = repository;
         }
 
-        public Product CreateProduct(Product product)
+        public Task<Product> CreateProduct(Product product)
         {
             return _repository.CreateProduct(product);
         }
 
-        public void DeleteProductById(int productId)
+        public Task DeleteProductById(int productId)
         {
-            _repository.DeleteProductById(productId);
+            return _repository.DeleteProductById(productId);
         }
 
-        public Product GetProductById(int productId)
+        public Task<Product> GetProductById(int productId)
         {
             return _repository.GetProductById(productId);
         }
 
-        public List<Product> GetProducts()
+        public Task<List<Product>> GetProducts()
         {
             return _repository.GetProducts();
         }
 
-        public Product UpdateProduct(int productId, Product product)
+        public Task<Product> UpdateProduct(int productId, Product product)
         {
             return _repository.UpdateProduct(productId, product);
         }

@@ -2,7 +2,6 @@
 using CleanArchitecture.Sample.Application.DTOs.Responses;
 using CleanArchitecture.Sample.Application.Interfaces.ApplicationServices;
 using CleanArchitecture.Sample.Application.Utils.Exceptions;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CleanArchitecture.Sample.Api.Controllers
@@ -18,17 +17,17 @@ namespace CleanArchitecture.Sample.Api.Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<ProductResponse>> GetProducts()
+        public async Task<ActionResult<List<ProductResponse>>> GetProducts()
         {
-            return Ok(_aplicationService.GetProducts());
+            return Ok(await _aplicationService.GetProducts());
         }
 
         [HttpGet("{id}")]
-        public ActionResult GetProductById(int id)
+        public async Task<ActionResult> GetProductById([FromQuery] int id)
         {
             try
             {
-                var product = _aplicationService.GetProductById(id);
+                var product = await _aplicationService.GetProductById(id);
                 return Ok(product);
             }
             catch (NotFoundException)
@@ -38,18 +37,18 @@ namespace CleanArchitecture.Sample.Api.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(CreateProductRequest request)
+        public async Task<ActionResult> Create([FromBody] CreateProductRequest request)
         {
-            var product = _aplicationService.CreateProduct(request);
+            var product = await _aplicationService.CreateProduct(request);
             return Ok(product);
         }
 
         [HttpPut("{id}")]
-        public ActionResult Update(int id, UpdateProductRequest request)
+        public async Task<ActionResult> Update([FromQuery] int id, [FromBody] UpdateProductRequest request)
         {
             try
             {
-                var product = _aplicationService.UpdateProduct(id, request);
+                var product = await _aplicationService.UpdateProduct(id, request);
                 return Ok(product);
             }
             catch (NotFoundException)
@@ -59,11 +58,11 @@ namespace CleanArchitecture.Sample.Api.Controllers
         }
 
         [HttpDelete("{id}")]
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> Delete([FromQuery] int id)
         {
             try
             {
-                _aplicationService.DeleteProductById(id);
+                await _aplicationService.DeleteProductById(id);
                 return NoContent();
             }
             catch (NotFoundException)

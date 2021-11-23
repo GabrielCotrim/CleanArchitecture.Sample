@@ -4,14 +4,14 @@ namespace CleanArchitecture.Sample.Application.Interfaces.Repositories
 {
     public interface IProductRepository
     {
-        List<Product> GetProducts();
+        Task<List<Product>> GetProducts();
 
-        Product GetProductById(int productId);
+        Task<Product> GetProductById(int productId);
 
-        void DeleteProductById(int productId);
+        Task DeleteProductById(int productId);
 
-        Product CreateProduct(Product product);
+        Task<Product> CreateProduct(Product product);
 
-        Product UpdateProduct(int productId, Product productUpdate);
+        Task<Product> UpdateProduct(int productId, Product productUpdate);
     }
 }

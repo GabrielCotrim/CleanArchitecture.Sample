@@ -10,14 +10,14 @@ namespace CleanArchitecture.Sample.Application.Interfaces.ApplicationServices
 {
     public interface IProductApplicationService
     {
-        List<ProductResponse> GetProducts();
+        Task<List<ProductResponse>> GetProducts();
 
-        ProductResponse GetProductById(int productId);
+        Task<ProductResponse> GetProductById(int productId);
 
-        void DeleteProductById(int productId);
+        Task DeleteProductById(int productId);
 
-        ProductResponse CreateProduct(CreateProductRequest product);
+        Task<ProductResponse> CreateProduct(CreateProductRequest product);
 
-        ProductResponse UpdateProduct(int productId, UpdateProductRequest product);
+        Task<ProductResponse> UpdateProduct(int productId, UpdateProductRequest product);
     }
 }

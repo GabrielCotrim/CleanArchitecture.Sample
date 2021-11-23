@@ -3,11 +3,6 @@ using CleanArchitecture.Sample.Application.Utils;
 using CleanArchitecture.Sample.Application.Utils.Exceptions;
 using CleanArchitecture.Sample.Domain.Entities;
 using CleanArchitecture.Sample.Infrastructure.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CleanArchitecture.Sample.Infrastructure.Repositories
 {
@@ -18,27 +13,27 @@ namespace CleanArchitecture.Sample.Infrastructure.Repositories
         {
             _dbContext = dbContext;
         }
-        public Product CreateProduct(Product product)
+        public async Task<Product> CreateProduct(Product product)
         {
             _dbContext.Products.Add(product);
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
             return product;
         }
 
-        public void DeleteProductById(int productId)
+        public async Task DeleteProductById(int productId)
         {
-            var product = _dbContext.Products.Find(productId);
+            var product = await _dbContext.Products.FindAsync(productId);
             if (product != null)
             {
                 _dbContext.Products.Remove(product);
-                _dbContext.SaveChanges();
+                await _dbContext.SaveChangesAsync();
             }
             else throw new NotFoundException();
         }
 
-        public Product GetProductById(int productId)
+        public async Task<Product> GetProductById(int productId)
         {
-            var product = _dbContext.Products.Find(productId);
+            var product = await _dbContext.Products.FindAsync(productId);
             if (product != null)
             {
                 return product;
@@ -47,14 +42,14 @@ namespace CleanArchitecture.Sample.Infrastructure.Repositories
             throw new NotFoundException();
         }
 
-        public List<Product> GetProducts()
+        public Task<List<Product>> GetProducts()
         {
-            return _dbContext.Products.ToList();
+            return Task.FromResult(_dbContext.Products.ToList());
         }
 
-        public Product UpdateProduct(int productId, Product productUpdate)
+        public async Task<Product> UpdateProduct(int productId, Product productUpdate)
         {
-            var product = _dbContext.Products.Find(productId);
+            var product = await _dbContext.Products.FindAsync(productId);
             if (product != null)
             {
                 product.Name = productUpdate.Name;
@@ -64,7 +59,7 @@ namespace CleanArchitecture.Sample.Infrastructure.Repositories
                 product.UpdatedAt = DateUtil.GetCurrentDate();
 
                 _dbContext.Products.Update(product);
-                _dbContext.SaveChanges();
+                await _dbContext.SaveChangesAsync();
 
                 return product;
             }

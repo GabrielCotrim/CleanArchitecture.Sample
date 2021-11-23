@@ -1,22 +1,17 @@
 ﻿using CleanArchitecture.Sample.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CleanArchitecture.Sample.Application.Interfaces.Services
 {
     public interface IProductService
     {
-        List<Product> GetProducts();
+        Task<List<Product>> GetProducts();
 
-        Product GetProductById(int productId);
+        Task<Product> GetProductById(int productId);
 
-        void DeleteProductById(int productId);
+        Task DeleteProductById(int productId);
 
-        Product CreateProduct(Product product);
+        Task<Product> CreateProduct(Product product);
 
-        Product UpdateProduct(int productId, Product product);
+        Task<Product> UpdateProduct(int productId, Product product);
     }
 }

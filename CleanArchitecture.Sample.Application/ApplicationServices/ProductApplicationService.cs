@@ -17,31 +17,32 @@ namespace CleanArchitecture.Sample.Application.ApplicationServices
             _mapper = mapper;
         }
 
-        public ProductResponse CreateProduct(CreateProductRequest product)
+        public async Task<ProductResponse> CreateProduct(CreateProductRequest product)
         {
-            var createdProduct = _service.CreateProduct(_mapper.Map<Product>(product));
+            var createdProduct = await _service.CreateProduct(_mapper.Map<Product>(product));
             return _mapper.Map<ProductResponse>(createdProduct);
         }
 
-        public void DeleteProductById(int productId)
+        public async Task DeleteProductById(int productId)
         {
-            _service.DeleteProductById(productId);
+            await _service.DeleteProductById(productId);
         }
 
-        public ProductResponse GetProductById(int productId)
+        public async Task<ProductResponse> GetProductById(int productId)
         {
-            var product = _service.GetProductById(productId);
+            var product = await _service.GetProductById(productId);
             return _mapper.Map<ProductResponse>(product);
         }
 
-        public List<ProductResponse> GetProducts()
+        public async Task<List<ProductResponse>> GetProducts()
         {
-            return _service.GetProducts().Select(p => _mapper.Map<ProductResponse>(p)).ToList();
+            var products = await _service.GetProducts();
+            return products.Select(p => _mapper.Map<ProductResponse>(p)).ToList();
         }
 
-        public ProductResponse UpdateProduct(int productId, UpdateProductRequest product)
+        public async Task<ProductResponse> UpdateProduct(int productId, UpdateProductRequest product)
         {
-            var updatedProduct = _service.UpdateProduct(productId, _mapper.Map<Product>(product));
+            var updatedProduct = await _service.UpdateProduct(productId, _mapper.Map<Product>(product));
             return _mapper.Map<ProductResponse>(updatedProduct);
         }
     }
